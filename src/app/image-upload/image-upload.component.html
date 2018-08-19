@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      Gerador de Imagens para PDF
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+      <p class="card-text">Converta imagens em um único documento PDF</p>
+      <form #imagemForm="ngForm">
+        <div class="custom-file">
+          <input type="file" name="imagem" (change)="fileInput($event)" multiple accept="image/*" class="custom-file-input" id="customFile" required>
+          <label class="custom-file-label" for="customFile">Escolher Arquivo</label>
+        </div>
+        <br>
+        <br>
+        <div class="form-group">
+          <label for="nomeArquivo">Nome do Arquivo</label>
+          <input type="text" class="form-control" id="nomeArquivo" placeholder="Nome do arquivo" title="Ex: joão" required>
+        </div>
+      </form>      
+      <br>
+      <a href="#" class="btn btn-primary float-right" *ngIf="imagemForm.valid" (click)="generatePdf()"><i class="fas fa-download"></i> Gerar PDF</a>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="card">
+    <div class="card-header">
+      Lista de Imagens
+    </div>
+    <div class="card-body">
+
+      <img *ngFor="let imagem of imagemUrl" [src]="imagem" style="width: 250px; height: 200px;" class="card-img-top" alt="Card image cap">
+    </div>
+  </div>
+</div>
