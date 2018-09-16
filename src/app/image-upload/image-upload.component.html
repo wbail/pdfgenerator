@@ -2,12 +2,13 @@
 <div class="container">
   <div class="card">
     <div class="card-header">
-      Gerador de Imagens para PDF
+      Conversor de Imagens para PDF
     </div>
     <div class="card-body">
       <h5 class="card-title"></h5>
       <p class="card-text">Converta imagens em um único documento PDF</p>
-      <form #imagemForm="ngForm">
+      <form [formGroup]="imagemForm">
+        <label for="customFile">Arquivos *</label>
         <div class="custom-file">
           <input type="file" name="imagem" (change)="fileInput($event)" multiple accept="image/*" class="custom-file-input" id="customFile" required>
           <label class="custom-file-label" for="customFile">Escolher Arquivo</label>
@@ -15,12 +16,29 @@
         <br>
         <br>
         <div class="form-group">
-          <label for="nomeArquivo">Nome do Arquivo</label>
-          <input type="text" class="form-control" id="nomeArquivo" placeholder="Nome do arquivo" title="Ex: joão" required>
+          <label for="nomeArquivo">Nome do Arquivo *</label>
+          <input type="text" class="form-control" id="nomeArquivo" formControlName="nomeArquivo" placeholder="Nome do arquivo" title="Ex: joão" required>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="enviarEmail" (click)="showEmailForm()">
+            <label class="custom-control-label" for="enviarEmail">Enviar por Email</label>
+          </div>
+        </div>
+        <div *ngIf="enviarEmail">
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" class="form-control" id="email" formControlName="email" placeholder="nome@email.com" title="Email para envio">
+          </div>
+          <div class="form-group">
+            <label for="conteudo">Mensagem</label>
+            <textarea name="conteudo" id="conteudo" formControlName="conteudo" class="form-control" cols="30" rows="4" placeholder="(opcional)" title="Mensagem para o destinatário"></textarea>
+          </div>
         </div>
       </form>      
       <br>
-      <a href="#" class="btn btn-primary float-right" *ngIf="imagemForm.valid" (click)="generatePdf()"><i class="fas fa-download"></i> Gerar PDF</a>
+      <a href="#" class="btn btn-primary float-right" *ngIf="!enviarEmail" (click)="generatePdf()"><i class="fas fa-download"></i> Gerar PDF</a>
+      <a href="#" class="btn btn-primary float-right" *ngIf="enviarEmail" (click)="generatePdf()"><i class="fas fa-paper-plane"></i> Gerar e Enviar</a>
     </div>
   </div>
   <br>
